@@ -1,21 +1,84 @@
+<!--Saved by Quest 5.5.5173.27901-->
 <asl version="550">
-
-  <include ref="English.aslx"/>
-  <include ref="Core.aslx"/>
-
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
   <game name="Island">
     <gameid>116e8448-aa84-445e-82a1-f81bbb58866d</gameid>
     <version>1.0</version>
     <firstpublished>2014</firstpublished>
+    <gridmap />
+    <feature_pictureframe />
+    <showscore />
+    <showhealth />
+    <attr name="feature_limitinventory" type="boolean">false</attr>
+    <feature_lightdark />
+    <feature_asktell />
+    <appendobjectdescription />
+    <subtitle type="string"></subtitle>
+    <author>Kolten Robison</author>
+    <description>A mysterious facility is holding you hostage on an island. Who are they? How did you get there? Who are you?</description>
+    <mapsize type="int">200</mapsize>
+    <showlocation />
+    <showpanes />
+    <showcommandbar />
+    <underlinehyperlinks type="boolean">false</underlinehyperlinks>
+    <customwidth type="int">800</customwidth>
+    <category>Mystery</category>
+    <difficulty>Hard</difficulty>
+    <defaultlinkforeground>Red</defaultlinkforeground>
+    <defaultbackground>White</defaultbackground>
+    <attr name="autodescription_youcansee" type="int">0</attr>
+    <attr name="autodescription_youcango" type="int">0</attr>
+    <attr name="autodescription_youarein_newline" type="boolean">false</attr>
+    <attr name="autodescription_youarein" type="int">1</attr>
   </game>
-
-  <object name="room">
+  <object name="room_0_0">
     <inherit name="editor_room" />
-
+    <alias>Concrete Room</alias>
+    <completed type="boolean">false</completed>
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
+      <turns type="int">0</turns>
+      <statusattributes type="stringdictionary">
+        <item>
+          <key>turns</key>
+          <value></value>
+        </item>
+      </statusattributes>
+    </object>
+    <object name="rock">
+      <inherit name="editor_object" />
+      <look>It is a sharp black shard of basalt rock.</look>
+      <inroomdescription>A small black rock sits on the ground.</inroomdescription>
+    </object>
+    <object name="light">
+      <inherit name="editor_object" />
+      <look>The lightbulb glows just enough for you to see the edges of the room.</look>
+      <inroomdescription>There is a dim light fixed in the middle of the ceiling.</inroomdescription>
+      <feature_lightdark />
+      <lightsource />
+      <lightstrength>strong</lightstrength>
     </object>
   </object>
-
+  <turnscript name="Turn Incrementer">
+    <enabled />
+    <script>
+      player.turns = player.turns + 1
+    </script>
+  </turnscript>
+  <turnscript name="Check For Gas">
+    <enabled />
+    <script><![CDATA[
+      if (player.turns > 8) {
+        if (room_0_0.completed) {
+        }
+        else {
+          msg ("A voice booms out from an speaker out of sight, \"Unfortunately, we have decided that you are not of use to us anymore. So sorry.\" <br> A green gas starts filling the room. You die.")
+          DecreaseScore (50)
+          finish
+        }
+      }
+    ]]></script>
+  </turnscript>
 </asl>
